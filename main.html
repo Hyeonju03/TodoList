@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>메인화면</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body class="size-dvw flex flex-col justify-center items-center">
+    <div class="mainScreen w-1/2 h-screen flex flex-col">
+        <div class="p-3 pl-5 pr-5 w-full h-12 flex justify-between">
+            <p>로고</p>
+            <div class="flex">
+                <!-- 버전 바꾸는 버튼 라이트/다크 -->
+                <p class="mr-5">버전</p>
+                <!-- 메뉴 클릭시 카테고리 등록+ / 카테고리 관리 / 루틴관리 / 리마인더 관리 -->
+                <p>메뉴</p>
+            </div>
+        </div>
+        <div class="inset-shadow-sm flex p-5 h-20 justify-start gap-3">
+            <p>내꺼</p>
+            <p>남꺼</p>
+        </div>
+        
+        <div class="flex">
+            <div class="flex flex-col">
+                <!-- 본인 상태와 달력 -->
+            </div>
+            <div class="flex flex-col">
+                <!-- 카테고리랑 리스트메뉴 -->
+            </div>
+        </div>
+    </div>
+    <div class="mainScreen w-1/2 h-20 flex fixed bottom-0 p-5 justify-center gap-24">
+        <div>피드</div>
+        <div>둘러보기</div>
+        <div>알림</div>
+        <div>My</div>
+    </div>
+
+    <script>
+        function generateCalendar() {
+          const today = new Date();
+          const currentMonth = today.getMonth();  // 0부터 시작 (0 = 1월, 11 = 12월)
+          const currentYear = today.getFullYear();
+          const firstDay = new Date(currentYear, currentMonth, 1);  // 해당 월의 첫날
+          const lastDay = new Date(currentYear, currentMonth + 1, 0);  // 해당 월의 마지막 날
+    
+          const firstDayOfWeek = firstDay.getDay();  // 첫날의 요일 (0 = 일요일, 1 = 월요일, ...)
+          const daysInMonth = lastDay.getDate();  // 해당 월의 일 수
+    
+          const calendarBody = document.querySelector("#calendar tbody");
+          calendarBody.innerHTML = "";  // 기존 달력을 초기화
+    
+          let date = 1;
+          
+          // 첫째 주 (빈 공간 채우기)
+          let row = document.createElement("tr");
+          for (let i = 0; i < firstDayOfWeek; i++) {
+            const cell = document.createElement("td");
+            row.appendChild(cell);
+          }
+    
+          // 첫 번째 주의 날짜들
+          for (let i = firstDayOfWeek; i < 7; i++) {
+            const cell = document.createElement("td");
+            cell.textContent = date;
+            if (date === today.getDate() && currentMonth === today.getMonth() && currentYear === today.getFullYear()) {
+              cell.classList.add("today");  // 오늘 날짜 강조
+            }
+            row.appendChild(cell);
+            date++;
+          }
+          calendarBody.appendChild(row);
+    
+          // 나머지 주들
+          while (date <= daysInMonth) {
+            row = document.createElement("tr");
+            for (let i = 0; i < 7; i++) {
+              if (date <= daysInMonth) {
+                const cell = document.createElement("td");
+                cell.textContent = date;
+                if (date === today.getDate() && currentMonth === today.getMonth() && currentYear === today.getFullYear()) {
+                  cell.classList.add("today");  // 오늘 날짜 강조
+                }
+                row.appendChild(cell);
+                date++;
+              }
+            }
+            calendarBody.appendChild(row);
+          }
+        }
+    
+        // 페이지 로드 시 달력 생성
+        window.onload = generateCalendar;
+      </script>
+
+</html>

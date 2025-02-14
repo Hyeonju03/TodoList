@@ -1,0 +1,13 @@
+/* 화면이 768px 이하일 때 스타일 적용 */
+@media (max-width: 830px) {
+    .mainScreen {
+        width: 100%; /* mainScreen 너비를 100%로 설정 */
+    }
+}
+
+/* 화면이 1024px 이상일 때는 기본 스타일 유지 */
+@media (min-width: 1024px) {
+    .mainScreen {
+        width: 50%; /* 1/2 너비 유지 */
+    }
+}
